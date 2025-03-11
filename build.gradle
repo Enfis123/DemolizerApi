@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.enfis'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(23)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+ext {
+	set('springAiVersion', "1.0.0-M6")
+}
+dependencies {
+	// Dependencias principales de Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'   // Para construir aplicaciones web RESTful
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Para trabajar con bases de datos SQL (si lo necesitas en el futuro)
+
+	// Dependencias para trabajar con MongoDB
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.ai:spring-ai-mongodb-atlas-store-spring-boot-starter'
+	implementation 'org.mongodb:mongo-java-driver:3.12.10' // Si necesitas un control más detallado de MongoDB (opcional)
+
+	// Dependencia para validación de entradas de usuario (opcional pero recomendado)
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // Para validar entidades y solicitudes HTTP
+
+	// Dependencia para registros y logs
+	implementation 'org.springframework.boot:spring-boot-starter-logging' // Para registros
+
+	// Dependencia para realizar pruebas unitarias y de integración
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'  // Para pruebas con Spring Boot Test
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // Para lanzar pruebas con JUnit 5
+
+	// Dependencia para serialización JSON (por defecto está incluida en spring-boot-starter-web)
+	implementation 'com.fasterxml.jackson.core:jackson-databind'  // Para trabajar con JSON en tu API
+
+	// Dependencias para Anotaciones de JPA (si decides usar JPA en el futuro)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Para trabajar con bases de datos relacionales (JPA)
+	implementation 'org.springframework.boot:spring-boot-starter-logging'  // Para registros y logging
+
+	// Dependencia para la configuración de la conexión con MongoDB Atlas
+	implementation 'org.springframework.data:spring-data-mongodb'  // Para soportar MongoDB
+
+	// Dependencia de Lombok para reducir código repetitivo (opcional)
+	implementation 'org.projectlombok:lombok'  // Facilita la creación de getters/setters, constructores y otros
+	compileOnly 'org.projectlombok:lombok'  // Lombok solo está disponible en tiempo de compilación
+	annotationProcessor 'org.projectlombok:lombok'  // Para procesar las anotaciones de Lombok
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+	}
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
