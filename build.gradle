@@ -23,6 +23,7 @@ dependencies {
 	// Dependencias principales de Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-web'   // Para construir aplicaciones web RESTful
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Para trabajar con bases de datos SQL (si lo necesitas en el futuro)
+	implementation 'io.github.cdimascio:dotenv-java:2.2.0'
 
 	// Dependencias para trabajar con MongoDB
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
